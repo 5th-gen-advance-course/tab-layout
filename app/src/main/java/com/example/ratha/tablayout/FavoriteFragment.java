@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by ratha on 11/15/2017.
  */
@@ -16,6 +18,7 @@ public class FavoriteFragment extends Fragment {
 
     public static final String ARG_PAGE="ARG_PAGE";
     private int mPage;
+    private  List list;
     public static FavoriteFragment newInstance(int page){
         Bundle args=new Bundle();
         args.putInt(ARG_PAGE,page);
@@ -40,5 +43,9 @@ public class FavoriteFragment extends Fragment {
 
         return viewGroup;
 
+    }
+
+    public void setData(List list) {
+        this.list=list;
     }
 }

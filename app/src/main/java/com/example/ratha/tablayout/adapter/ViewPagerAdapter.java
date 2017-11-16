@@ -21,11 +21,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Context context;
     private String[] tabTitles;
     private int[] tabIcon;
+
+
     public ViewPagerAdapter(FragmentManager fm, Context context,List<Fragment> fragments) {
         super(fm);
         this.context=context;
         this.fragments=fragments;
     }
+
 
     @Override
     public Fragment getItem(int position) {
@@ -40,14 +43,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
 
-        Drawable image=context.getResources().getDrawable(tabIcon[position]);
-        image.setBounds(0,0,image.getIntrinsicWidth(),image.getIntrinsicHeight());
-
-        SpannableString spannableString=new SpannableString("   "+tabTitles[position]);
-        ImageSpan imageSpan=new ImageSpan(image,ImageSpan.ALIGN_BOTTOM);
-        spannableString.setSpan(imageSpan,0,1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        return spannableString;
+        return tabTitles[position];
     }
 
     public String[] getTabTitles() {

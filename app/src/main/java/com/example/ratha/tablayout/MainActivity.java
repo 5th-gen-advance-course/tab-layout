@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.ratha.tablayout.adapter.ViewPagerAdapter;
+import com.example.ratha.tablayout.adapter.ViewStatePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private String [] tabTitles={"Popular","Recent","Favorite"};
     private int[] tabIcon={R.drawable.gold_star,R.drawable.gold_star,R.drawable.gold_star};
+    private List list;
 
     List<Fragment> fragments= new ArrayList();
     @Override
@@ -29,17 +31,47 @@ public class MainActivity extends AppCompatActivity {
         tabLayout=findViewById(R.id.sliding_tabs);
 
         this.setupFragment();
+
         ViewPagerAdapter adapter =new ViewPagerAdapter(getSupportFragmentManager(),
                 this,fragments);
         adapter.setTabTitles(tabTitles);
         adapter.setTabIcon(tabIcon);
 
         viewPager.setAdapter(adapter);
+        this.setDataToFragment(viewPager);
+
+
+        //FragmentStatePagerAdapter
+        ViewStatePagerAdapter stateAdapter =new ViewStatePagerAdapter(getSupportFragmentManager(),this,fragments);
+        stateAdapter.setTabTitle(tabTitles);
+        //viewPager.setAdapter(stateAdapter);
+
+
         tabLayout.setupWithViewPager(viewPager);
+
         //set icon
         /*for(int i=0;i<tabIcon.length;i++){
             tabLayout.getTabAt(i).setIcon(tabIcon[i]);
         }*/
+
+    }
+
+    private void setDataToFragment(ViewPager viewPager) {
+
+        if(null!=viewPager){
+            ViewPagerAdapter adapter = (ViewPagerAdapter) viewPager.getAdapter();
+            Fragment fragment=adapter.getItem(viewPager.getCurrentItem());
+            if(fragment instanceof PopularFragment){
+                PopularFragment popularFragment= (PopularFragment) fragment;
+                popularFragment.setData(list);
+            }else if(fragment instanceof  RecentFragment){
+                RecentFragment recentFragment= (RecentFragment) fragment;
+                recentFragment.setData(list);
+            }else if(fragment instanceof  FavoriteFragment ){
+                FavoriteFragment favoriteFragment= (FavoriteFragment) fragment;
+                favoriteFragment.setData(list);
+            }
+        }
 
     }
 
@@ -53,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(favoriteFragment);
     }
 
-    @Override
+   @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(POSITION,tabLayout.getSelectedTabPosition());
@@ -64,4 +96,5 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         viewPager.setCurrentItem(savedInstanceState.getInt(POSITION));
     }
+
 }

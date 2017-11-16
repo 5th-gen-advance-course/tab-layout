@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by ratha on 11/15/2017.
  */
@@ -15,6 +17,7 @@ import android.widget.TextView;
 public class PopularFragment extends Fragment {
 
     public static final String ARG_PAGE="ARG_PAGE";
+    public List list;
     private int mPage;
     public static PopularFragment newInstance(int page){
         Bundle args=new Bundle();
@@ -40,5 +43,9 @@ public class PopularFragment extends Fragment {
 
         return viewGroup;
 
+    }
+
+    public void setData(List list) {
+        this.list=list;
     }
 }
